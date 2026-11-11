@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Paketler & Fiyatlandırma // OSINTCORE{% endblock %}
+
+{% block content %}
+<div style="text-align:center; padding:2rem 0 2.5rem;">
+  <h1 style="font-size:2.2rem; margin-bottom:0.5rem;">İstihbarat Erişim Paketleri</h1>
+  <p style="color:var(--text-muted);">Ücretsiz araçlarla hemen başlayın, derin sosyal medya korelasyon modülleri için PRO'ya geçin.</p>
+</div>
+
+<div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+  <div class="card">
+    <div>
+      <span class="badge badge-free mono">BAŞLANGIÇ</span>
+      <h2 style="font-size:1.6rem; margin:0.6rem 0;">FREE <span style="font-size:0.95rem; color:var(--text-muted);">/ ₺0</span></h2>
+      <ul style="list-style:none; color:var(--text-muted); font-size:0.92rem; margin:1.2rem 0; line-height:2;">
+        <li>✓ Discord Snowflake & ID Çözücü (Sınırsız)</li>
+        <li>✓ Discord Davet Kodu Analizi (Sınırsız)</li>
+        <li>✓ YouTube oEmbed Metadata Çıkarıcı (Sınırsız)</li>
+        <li>✓ Hızlı Kullanıcı Adı Ayak İzi Taraması</li>
+        <li>✕ Instagram & TikTok Derin Analiz Modülleri</li>
+      </ul>
+    </div>
+    <a href="{{ url_for('dashboard') if current_user.is_authenticated else url_for('register') }}" class="btn btn-outline" style="text-align:center;">Mevcut Plan</a>
+  </div>
+
+  <div class="card" style="border-color: var(--pro);">
+    <div>
+      <span class="badge badge-pro mono">EN POPÜLER</span>
+      <h2 style="font-size:1.6rem; margin:0.6rem 0;">PRO OPERATÖR <span style="font-size:0.95rem; color:var(--text-muted);">/ ₺299 Ay</span></h2>
+      <ul style="list-style:none; color:var(--text-main); font-size:0.92rem; margin:1.2rem 0; line-height:2;">
+        <li>✓ Tüm Ücretsiz Araçlar (Sınırsız)</li>
+        <li>✓ Instagram Derin Profil & Biyografi Analizi</li>
+        <li>✓ TikTok Profil & Video Sinyal İstihbaratı</li>
+        <li>✓ YouTube Kanal Kaynak Kod & RSS İstihbaratı</li>
+        <li>✓ Çapraz Platform Kimlik Korelasyon Motoru</li>
+        <li>✓ Aylık +250 İstihbarat Kredisi</li>
+      </ul>
+    </div>
+    {% if current_user.is_authenticated %}
+      <form method="POST" action="{{ url_for('upgrade_plan', plan_name='pro') }}">
+        <button type="submit" class="btn btn-pro" style="width:100%;">PRO Paketi Aktifleştir</button>
+      </form>
+    {% else %}
+      <a href="{{ url_for('register') }}" class="btn btn-pro" style="text-align:center;">Kayıt Ol ve PRO Seç</a>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <div>
+      <span class="badge badge-platform mono">KURUMSAL / AJANS</span>
+      <h2 style="font-size:1.6rem; margin:0.6rem 0;">ENTERPRISE <span style="font-size:0.95rem; color:var(--text-muted);">/ ₺899 Ay</span></h2>
+      <ul style="list-style:none; color:var(--text-muted); font-size:0.92rem; margin:1.2rem 0; line-height:2;">
+        <li>✓ Tüm PRO Modüllere Tam Erişim</li>
+        <li>✓ Aylık +1000 İstihbarat Kredisi</li>
+        <li>✓ Öncelikli İstek Kuyruğu & Yüksek Hız</li>
+        <li>✓ Tam Sorgu Geçmişi Arşivi</li>
+      </ul>
+    </div>
+    {% if current_user.is_authenticated %}
+      <form method="POST" action="{{ url_for('upgrade_plan', plan_name='enterprise') }}">
+        <button type="submit" class="btn btn-primary" style="width:100%;">Enterprise Aktifleştir</button>
+      </form>
+    {% else %}
+      <a href="{{ url_for('register') }}" class="btn btn-outline" style="text-align:center;">Kayıt Ol ve Başla</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

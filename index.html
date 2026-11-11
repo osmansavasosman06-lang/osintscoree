@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div class="hero-badge mono">v2.4 LIVE PRODUCTION // GERÇEK ZAMANLI OSİNT MOTORU</div>
+  <h1>Discord, Instagram, YouTube & TikTok<br><span style="color:#00f0ff;">Açık Kaynak İstihbarat Merkezi</span></h1>
+  <p>Sahte simülasyonlar veya statik demo veriler yok. Gerçek HTTP uç noktaları, Snowflake kriptografik zaman çözümleyicileri ve çapraz platform ayak izi tarayıcılarıyla saniyeler içinde doğrulanmış istihbarat toplayın.</p>
+  <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+    {% if current_user.is_authenticated %}
+      <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Komuta Merkezine Git</a>
+    {% else %}
+      <a href="{{ url_for('register') }}" class="btn btn-primary">Ücretsiz Hesap Oluştur (15 Kredi)</a>
+      <a href="{{ url_for('login') }}" class="btn btn-outline">Operatör Girişi</a>
+    {% endif %}
+  </div>
+</section>
+
+<h2 style="margin-bottom:1rem; font-size:1.35rem;">Aktif İstihbarat Modülleri</h2>
+<div class="grid">
+  {% for t in tools %}
+  <div class="card">
+    <div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+        <span class="badge badge-platform mono">{{ t.platform }}</span>
+        {% if t.tier == 'free' %}
+          <span class="badge badge-free mono">ÜCRETSİZ</span>
+        {% else %}
+          <span class="badge badge-pro mono">PRO // {{ t.cost }} KREDİ</span>
+        {% endif %}
+      </div>
+      <h3 style="font-size:1.08rem; margin-bottom:0.5rem;">{{ t.name }}</h3>
+      <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:1.2rem;">{{ t.desc }}</p>
+    </div>
+    <a href="{{ url_for('dashboard') if current_user.is_authenticated else url_for('register') }}" class="btn btn-outline" style="text-align:center;">Modülü Çalıştır</a>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

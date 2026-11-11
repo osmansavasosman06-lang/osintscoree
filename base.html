@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}OSINTCORE // Açık Kaynak İstihbarat Platformu{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <nav class="navbar">
+    <a href="{{ url_for('index') }}" class="brand mono">OSINT<span>CORE</span></a>
+    <div class="nav-links">
+      <a href="{{ url_for('index') }}">Modüller</a>
+      <a href="{{ url_for('pricing') }}">Paketler</a>
+      {% if current_user.is_authenticated %}
+        <a href="{{ url_for('dashboard') }}" style="color:#00f0ff;">Komuta Merkezi</a>
+        <a href="{{ url_for('logout') }}" class="btn btn-outline">Çıkış</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Giriş Yap</a>
+        <a href="{{ url_for('register') }}" class="btn btn-primary">Kayıt Ol</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
